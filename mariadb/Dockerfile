@@ -2,7 +2,7 @@ FROM debian:10
 
 RUN apt update -y && apt install mariadb-server -y
 
-COPY ./tool/install.sh .
+COPY ./tools/install.sh .
 
 RUN chmod 777 install.sh
 
