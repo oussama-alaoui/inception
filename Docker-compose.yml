@@ -1,0 +1,59 @@
+version: '3'
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/oalaoui/wordpress/mariadb
+      o: bind
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/oalaoui/wordpress/wordpress
+      o: bind
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./mariadb/
+    ports:
+      - 3306:3306
+    environment:
+      DB_NAME: test123
+      DB_PSSWRD: 1234
+      DB_USER: oalaoui
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - ./mariadb:/var/lib/mysql
+
+  wp:
+    container_name: wp
+    build: ./wordpress/
+    ports:
+      - 8080:8080
+    depends_on:
+      - mariadb
+    environment:
+      DB_NAME: test123
+      DB_PSSWRD: 1234
+      DB_USER: oalaoui
+      MYSQL_ROOT_PASSWORD: 1234
+    volumes:
+      - ./wordpress:/usr/share/nginx/html
+
+  nginx:
+    container_name: nginx
+    build: ./nginx/
+    ports:
+      - 443:443
+    depends_on:
+      - wp
+    volumes:
+      - ./wordpress:/usr/share/nginx/html
+
