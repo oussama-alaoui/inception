@@ -12,6 +12,6 @@ COPY ./tools/script.sh /var/www
 # Run script
 RUN chmod +x /var/www/script.sh
 
-ENTRYPOINT [ "./var/www/script.sh" ]
+ENTRYPOINT [ "/var/www/script.sh" ]
 
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
