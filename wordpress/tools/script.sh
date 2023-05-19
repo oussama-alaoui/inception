@@ -35,5 +35,7 @@ cp wp-config-sample.php wp-config.php
 wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PSSWRD --admin_email=$WP_ADMIN_EMAIL --allow-root
 wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PSSWRD --allow-root
 echo "Downloading and configuring WordPress..."
+apt-get update && apt-get install -y mysql-client
+wp db check --allow-root
 
 exec "$@"
