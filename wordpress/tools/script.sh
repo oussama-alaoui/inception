@@ -1,19 +1,5 @@
 #!/bin/bash
 
-DB_NAME="xxxx"
-DB_PSSWRD="xxxx"
-DB_USER="xxxx"
-DB_HOST="mariadb"
-
-WP_URL="localhost:5050"
-WP_TITLE="My blog"
-WP_ADMIN="admin"
-WP_ADMIN_PSSWRD="1234"
-WP_ADMIN_EMAIL="admin@alaoui.com"
-WP_USER="user"
-WP_USER_PSSWRD="1234"
-WP_USER_EMAIL="user@alaoui.com"
-
 mkdir -p /run/php   # Create the directory if it doesn't exist
 touch /run/php/php7.3-fpm.pid
 sed -i "s/listen = \/run\/php\/php7.3-fpm.sock/listen = 9000/" "/etc/php/7.3/fpm/pool.d/www.conf"
@@ -35,7 +21,5 @@ cp wp-config-sample.php wp-config.php
 wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PSSWRD --admin_email=$WP_ADMIN_EMAIL --allow-root
 wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PSSWRD --allow-root
 echo "Downloading and configuring WordPress..."
-apt-get update && apt-get install -y mysql-client
-wp db check --allow-root
 
 exec "$@"

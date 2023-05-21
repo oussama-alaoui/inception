@@ -1,11 +1,6 @@
 #!/bin/bash
 sed -i 's/bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
-DB_NAME="xxxx"
-DB_PSSWRD="xxxx"
-DB_USER="xxxx"
-MYSQL_ROOT_PASSWORD="xxxx"
-
 service mysql start
 
 mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS $DB_NAME"
@@ -16,4 +11,5 @@ mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "ALTER USER 'root'@'localhost' IDENTIF
 mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES"
 #  service mysql stop
 kill `cat /var/run/mysqld/mysqld.pid`
+
 exec "$@"
