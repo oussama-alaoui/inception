@@ -9,17 +9,19 @@ wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -
 chmod +x /usr/local/bin/wp
 echo "Downloading WordPress CLI..."
 
-mkdir -p /usr/share/nginx/html
-cd /usr/share/nginx/html && wp core download --allow-root
-touch /usr/share/nginx/html/wp-config.php
-sed -i "s/database_name_here/$DB_NAME/g" /usr/share/nginx/html/wp-config-sample.php
-sed -i "s/username_here/$DB_USER/g" /usr/share/nginx/html/wp-config-sample.php
-sed -i "s/password_here/$DB_PSSWRD/g" /usr/share/nginx/html/wp-config-sample.php
-sed -i "s/localhost/$DB_HOST/g" /usr/share/nginx/html/wp-config-sample.php
-cd /usr/share/nginx/html/
-cp wp-config-sample.php wp-config.php
-wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PSSWRD --admin_email=$WP_ADMIN_EMAIL --allow-root
-wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PSSWRD --allow-root
-echo "Downloading and configuring WordPress..."
+if [ ! -f /usr/share/nginx/html/index.php ]; then
+    mkdir -p /usr/share/nginx/html
+    cd /usr/share/nginx/html && wp core download --allow-root
+    touch /usr/share/nginx/html/wp-config.php
+    sed -i "s/database_name_here/$DB_NAME/g" /usr/share/nginx/html/wp-config-sample.php
+    sed -i "s/username_here/$DB_USER/g" /usr/share/nginx/html/wp-config-sample.php
+    sed -i "s/password_here/$DB_PSSWRD/g" /usr/share/nginx/html/wp-config-sample.php
+    sed -i "s/localhost/$DB_HOST/g" /usr/share/nginx/html/wp-config-sample.php
+    cd /usr/share/nginx/html/
+    cp wp-config-sample.php wp-config.php
+    wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PSSWRD --admin_email=$WP_ADMIN_EMAIL --allow-root
+    wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PSSWRD --allow-root
+    echo "Downloading and configuring WordPress..."
+fi
 
 exec "$@"
