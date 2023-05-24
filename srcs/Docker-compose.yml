@@ -22,6 +22,8 @@ services:
     build: ./mariadb/
     ports:
       - 3360:3360
+    volumes:
+      - mariadb:/var/lib/mysql
 
   wp:
     container_name: wp
