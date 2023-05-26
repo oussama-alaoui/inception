@@ -6,20 +6,20 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /Users/oalaoui-/data/mariadb
+      device: ${HOME}/data/mariadb
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/oalaoui-/data/wordpress
+      device: ${HOME}/data/wordpress
 
 services:
   mariadb:
     container_name: mariadb
     env_file:
       - .env
-    build: ./mariadb/
+    build: ./requirements/mariadb/
     ports:
       - 3360:3360
     volumes:
@@ -29,7 +29,7 @@ services:
     container_name: wp
     env_file:
       - .env
-    build: ./wordpress/
+    build: ./requirements/wordpress/
     ports:
       - 9000:9000
     depends_on:
@@ -41,7 +41,7 @@ services:
     env_file:
       - .env
     container_name: nginx
-    build: ./nginx/
+    build: ./requirements/nginx/
     ports:
       - 443:443
     depends_on:
