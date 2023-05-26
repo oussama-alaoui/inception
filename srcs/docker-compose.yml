@@ -6,13 +6,21 @@ volumes:
     driver_opts:
       o: bind
       type: none
+<<<<<<< HEAD:srcs/Docker-compose.yml
       device: ${HOME}/data/mariadb
+=======
+      device: /home/oussama/data/mariadb
+>>>>>>> c02ec510fa66ade7785c66c600831d159ec9fdd8:srcs/docker-compose.yml
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
+<<<<<<< HEAD:srcs/Docker-compose.yml
       device: ${HOME}/data/wordpress
+=======
+      device: /home/oussama/data/wordpress
+>>>>>>> c02ec510fa66ade7785c66c600831d159ec9fdd8:srcs/docker-compose.yml
 
 services:
   mariadb:
