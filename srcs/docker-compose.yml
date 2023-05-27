@@ -6,13 +6,17 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: ${HOME}/data/mariadb
+      device: $HOME/data/mariadb
   wordpress:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ${HOME}/data/wordpress
+      device: $HOME/data/wordpress
+
+networks:
+  myapp_net:
+    driver: bridge
 
 services:
   mariadb:
@@ -24,6 +28,8 @@ services:
       - 3360:3360
     volumes:
       - mariadb:/var/lib/mysql
+    networks:
+      - myapp_net
 
   wp:
     container_name: wp
@@ -36,11 +42,13 @@ services:
       - mariadb
     volumes:
       - wordpress:/usr/share/nginx/html
+    networks:
+      - myapp_net
 
   nginx:
+    container_name: nginx
     env_file:
       - .env
-    container_name: nginx
     build: ./requirements/nginx/
     ports:
       - 443:443
@@ -48,6 +56,18 @@ services:
       - wp
     volumes:
       - wordpress:/usr/share/nginx/html
+    networks:
+      - myapp_net
+
+  nginx_bonus:
+    env_file:
+      - .env
+    container_name: nginx_bonus
+    build: ./requirements/bonus/nginx_bonus/
+    ports:
+      - 80:80
+    networks:
+      - myapp_net
 
 
 

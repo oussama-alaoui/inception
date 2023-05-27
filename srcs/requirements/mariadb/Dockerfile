@@ -6,8 +6,6 @@ COPY ./tools/install.sh .
 
 RUN chmod 777 install.sh
 
-# RUN sh install.sh
-
 ENTRYPOINT [ "./install.sh" ]
 
 CMD [ "mysqld" ]

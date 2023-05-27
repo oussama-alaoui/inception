@@ -4,7 +4,10 @@ DATA_DIR := ${HOME}/data
 build:
 	mkdir -p $(DATA_DIR)/mariadb
 	mkdir -p $(DATA_DIR)/wordpress
-	docker-compose -f $(DOCKER_COMPOSE_FILE) up --build
+	docker-compose -f $(DOCKER_COMPOSE_FILE) build
+
+up:
+	docker-compose -f $(DOCKER_COMPOSE_FILE) up
 
 down:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down
@@ -20,6 +23,6 @@ clean:
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --volumes --remove-orphans
 	docker rmi -f $$(docker images -q)
 	docker volume prune --force
-	# docker network prune --force
+	docker network prune --force
 
 .PHONY: build up down re logs clean
