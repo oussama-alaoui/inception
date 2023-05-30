@@ -30,6 +30,7 @@ services:
       - mariadb:/var/lib/mysql
     networks:
       - myapp_net
+    restart: on-failure
 
   wp:
     container_name: wp
@@ -44,6 +45,7 @@ services:
       - wordpress:/usr/share/nginx/html
     networks:
       - myapp_net
+    restart: on-failure
 
   nginx:
     container_name: nginx
@@ -58,6 +60,7 @@ services:
       - wordpress:/usr/share/nginx/html
     networks:
       - myapp_net
+    restart: on-failure
 
   nginx_bonus:
     env_file:
